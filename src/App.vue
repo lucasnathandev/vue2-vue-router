@@ -1,10 +1,21 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <div class="jumbotron">
+      <h1 class="display-4">Vue Router</h1>
+      <p class="lead">Adding routes to the SPA in Vue.</p>
+    </div>
+    <div class="container">
+      <router-link to="/" class="btn btn-info mb-2 mr-2">Home</router-link>
+      <router-link to="/about" class="btn btn-info mb-2 mr-2"
+        >About</router-link
+      >
+      <router-link to="/contacts" class="btn btn-info mb-2 mr-2"
+        >Contacts</router-link
+      >
+      <router-view />
+    </div>
+
+    <!-- This tag is where the components from each router-link will be rendered-->
   </div>
 </template>
 
