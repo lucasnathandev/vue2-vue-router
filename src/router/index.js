@@ -15,6 +15,7 @@ const routes = [
   new Route("/", "home", "HomeView"),
   new Route("/about", "about", "AboutView"),
   new Route("/contacts", "contacts", "contacts/ContactsView"),
+  new Route("/contacts/:id", "contactsId", "contacts/ContactDetailsView"),
 ];
 
 const router = new VueRouter({
