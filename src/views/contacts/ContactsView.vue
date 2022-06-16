@@ -1,5 +1,8 @@
 <template>
-  <contacts-list />
+  <div>
+    <router-view></router-view>
+    <contacts-list />
+  </div>
 </template>
 
 <script>
