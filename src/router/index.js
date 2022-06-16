@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 
 function Route(path, name, component, options = {}) {
   const ext = component.match(/.vue|.js/);
-  console.log(ext);
   return {
     path,
     name,
