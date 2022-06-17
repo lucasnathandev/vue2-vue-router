@@ -5,10 +5,11 @@ Vue.use(VueRouter);
 const routes = [
   new Route("/", "home", "HomeView"),
   new Route("/about", "about", "AboutView"),
-  new Route("/contacts", "contacts", "contacts/ContactsView", {
+  new Route("/my-contacts", "contacts", "contacts/ContactsView", {
     children: [
+      //Routes order matters inside children property.
       new Route(":id", "contactDetails", "contacts/ContactDetailsView"),
-      new Route(":id/edit", "contactEdit", "contacts/", {
+      new Route(":id/edit", "contactEdit", "", {
         components: {
           default: new ViewImport("contacts/ContactEditView"),
           contactDetailsRV: new ViewImport("contacts/ContactDetailsView"),
@@ -16,6 +17,9 @@ const routes = [
       }),
       new Route("", "contactsHome", "contacts/ContactsHomeView"),
     ],
+  }),
+  new Route("/contacts", "deprecatedContacts", "", {
+    redirect: "/my-contacts",
   }),
 ];
 
