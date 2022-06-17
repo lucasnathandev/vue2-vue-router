@@ -5,10 +5,12 @@ Vue.use(VueRouter);
 const routes = [
   new Route("/about", "about", "AboutView"),
   new Route("/contacts", "", "contacts/ContactsView", {
+    alias: ["/my-contacts", "/contacts-list"],
     children: [
       //Routes order matters inside children property.
       new Route(":id", "contactDetails", "contacts/ContactDetailsView"),
       new Route(":id/edit", "contactEdit", "", {
+        alias: ":id/change",
         components: {
           default: new ViewImport("contacts/ContactEditView"),
           contactDetailsRV: new ViewImport("contacts/ContactDetailsView"),
@@ -42,13 +44,18 @@ function Route(path, name, component, options = {}) {
   return {
     path,
     name,
-    component: () =>
-      import(`../views/${component}.${ext !== null || options.ext || "vue"}`),
+    component: () => {
+      if (ext !== null) return import(`../views/${component}`);
+      return import(`../views/${component}.${options.ext || "vue"}`);
+    },
     ...options,
   };
 }
 
 function ViewImport(componentName, ext = "vue") {
   const fileExt = componentName.match(/.vue|.js/);
-  return () => import(`../views/${componentName}.${fileExt !== null || ext}`);
+  return () => {
+    if (fileExt !== null) return import(`../views/${componentName}`);
+    return import(`../views/${componentName}.${ext}`);
+  };
 }
