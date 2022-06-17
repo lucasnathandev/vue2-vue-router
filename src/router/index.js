@@ -30,6 +30,9 @@ const routes = [
       };
     },
   }),
+  new Route("/contacts*", "", "contacts/ContactNotFoundView"),
+  // Not found route treatment
+  new Route("*", "404NotFound", "NotFoundView"),
 ];
 
 export default new VueRouter({
