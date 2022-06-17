@@ -3,9 +3,8 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 const routes = [
-  new Route("/", "home", "HomeView"),
   new Route("/about", "about", "AboutView"),
-  new Route("/my-contacts", "contacts", "contacts/ContactsView", {
+  new Route("/contacts", "", "contacts/ContactsView", {
     children: [
       //Routes order matters inside children property.
       new Route(":id", "contactDetails", "contacts/ContactDetailsView"),
@@ -15,11 +14,19 @@ const routes = [
           contactDetailsRV: new ViewImport("contacts/ContactDetailsView"),
         },
       }),
-      new Route("", "contactsHome", "contacts/ContactsHomeView"),
+      new Route("", "contacts", "contacts/ContactsHomeView"),
     ],
   }),
-  new Route("/contacts", "deprecatedContacts", "", {
-    redirect: "/my-contacts",
+  new Route("/home", "home", "HomeView"),
+  // new Route("/", "redirectContacts", "", { redirect: "/contacts", }),
+  new Route("/", "redirectContacts", "", {
+    redirect: (to) => {
+      to;
+      // return "/contacts";
+      return {
+        name: "contacts",
+      };
+    },
   }),
 ];
 

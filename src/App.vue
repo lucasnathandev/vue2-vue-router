@@ -5,7 +5,7 @@
       <p class="lead">Adding routes to the SPA in Vue.</p>
     </div>
     <div class="container">
-      <router-link to="/" class="btn btn-info mb-4 mr-2" exact
+      <router-link to="/home" class="btn btn-info mb-4 mr-2" exact
         >Home</router-link
       >
       <router-link to="/about" class="btn btn-info mb-4 mr-2"
