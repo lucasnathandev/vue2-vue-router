@@ -3,30 +3,43 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 const routes = [
+  new Route("/", "home", "HomeView"),
   new Route("/about", "about", "AboutView"),
   new Route("/contacts", "", "contacts/ContactsView", {
     alias: ["/my-contacts", "/contacts-list"],
+    props: (route) => {
+      const search = route.query.search;
+      return search ? { found: search } : {};
+    },
     children: [
       //Routes order matters inside children property.
-      new Route(":id", "contactDetails", "contacts/ContactDetailsView"),
+      new Route(":id", "contactDetails", "contacts/ContactDetailsView", {
+        props: (route) => ({ id: +route.params.id }),
+        // props: { //This is used when you want the prop be constant
+        //   id: 10,
+        // },
+      }),
       new Route(":id/edit", "contactEdit", "", {
         alias: ":id/change",
         components: {
           default: new ViewImport("contacts/ContactEditView"),
           contactDetailsRV: new ViewImport("contacts/ContactDetailsView"),
         },
+        props: {
+          default: true,
+          contactDetailsRV: true,
+        },
       }),
       new Route("", "contacts", "contacts/ContactsHomeView"),
     ],
   }),
-  new Route("/home", "home", "HomeView"),
   // new Route("/", "redirectContacts", "", { redirect: "/contacts", }),
-  new Route("/", "redirectContacts", "", {
+  new Route("/home", "redirectHome", "", {
     redirect: (to) => {
       to;
       // return "/contacts";
       return {
-        name: "contacts",
+        name: "home", //Route target name property
       };
     },
   }),
@@ -42,6 +55,7 @@ export default new VueRouter({
   routes,
 });
 
+// Functions
 function Route(path, name, component, options = {}) {
   const ext = component.match(/.vue|.js/);
   return {

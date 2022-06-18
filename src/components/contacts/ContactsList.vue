@@ -1,10 +1,21 @@
 <template>
   <div class="container">
     <h3 class="font-weight light">Contacts</h3>
-    <ul class="list-group" v-if="contacts.length">
+    <div class="form-group">
+      <input
+        type="search"
+        name=""
+        class="form-control"
+        placeholder="Search Contacts"
+        @keyup.enter.exact="search"
+        :value="searchProp"
+      />
+    </div>
+    <hr />
+    <ul class="list-group" v-if="filteredContacts.length">
       <contacts-lista-item
         class="list-group-item"
-        v-for="contact in contacts"
+        v-for="contact in filteredContacts"
         :key="contact.id"
         :contactProp="contact"
       />
@@ -21,6 +32,7 @@ export default {
   components: {
     ContactsListaItem,
   },
+  props: ["searchProp"],
   data() {
     return {
       contacts: [
@@ -30,7 +42,23 @@ export default {
       ],
     };
   },
+  computed: {
+    filteredContacts() {
+      const search = this.searchProp;
+      return search
+        ? this.contacts.filter((contact) =>
+            contact.name.toLowerCase().includes(search.toLowerCase())
+          )
+        : this.contacts;
+    },
+  },
   methods: {
+    search({ target }) {
+      this.$router.push({
+        path: "/contacts",
+        query: { search: target.value },
+      });
+    },
     back() {
       this.$router.back();
     },
