@@ -26,8 +26,8 @@ const routes = [
           contactDetailsRV: new ViewImport("contacts/ContactDetailsView"),
         },
         props: {
-          default: true,
-          contactDetailsRV: true,
+          default: (route) => ({ id: +route.params.id }),
+          contactDetailsRV: (route) => ({ id: +route.params.id }),
         },
       }),
       new Route("", "contacts", "contacts/ContactsHomeView"),

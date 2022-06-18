@@ -6,6 +6,11 @@
 </template>
 <script>
 export default {
-  props: ["id"],
+  props: {
+    id: {
+      type: Number,
+      required: true,
+    },
+  },
 };
 </script>
