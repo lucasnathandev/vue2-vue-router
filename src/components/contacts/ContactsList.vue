@@ -13,7 +13,7 @@
     </div>
     <hr />
     <ul class="list-group" v-if="filteredContacts.length">
-      <contacts-lista-item
+      <contacts-list-item
         class="list-group-item"
         v-for="contact in filteredContacts"
         :key="contact.id"
@@ -26,11 +26,11 @@
 </template>
 
 <script>
-import ContactsListaItem from "./ContactsListItem.vue";
+import ContactsListItem from "./ContactsListItem.vue";
 
 export default {
   components: {
-    ContactsListaItem,
+    ContactsListItem,
   },
   props: ["searchProp"],
   data() {

@@ -19,9 +19,8 @@ const routes = [
         //   id: 10,
         // },
       }),
-      new Route(":id(\\d+)/edit/:oneOrPlus+", "contactEdit", "", {
-        // alias: ":id(\\d+)/change/:zeroOrPlus*",
-        alias: ":id(\\d+)/change/:oneOrPlus+",
+      new Route(":id(\\d+)/edit/:optional?", "contactEdit", "", {
+        alias: ":id(\\d+)/change/",
         components: {
           default: new ViewImport("contacts/ContactEditView"),
           contactDetailsRV: new ViewImport("contacts/ContactDetailsView"),
