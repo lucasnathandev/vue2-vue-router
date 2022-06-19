@@ -13,21 +13,22 @@ const routes = [
     },
     children: [
       //Routes order matters inside children property.
-      new Route(":id", "contactDetails", "contacts/ContactDetailsView", {
-        props: (route) => ({ id: +route.params.id }),
+      new Route(":id(\\d+)", "contactDetails", "contacts/ContactDetailsView", {
+        props: getIdParam,
         // props: { //This is used when you want the prop be constant
         //   id: 10,
         // },
       }),
-      new Route(":id/edit", "contactEdit", "", {
-        alias: ":id/change",
+      new Route(":id(\\d+)/edit/:oneOrPlus+", "contactEdit", "", {
+        // alias: ":id(\\d+)/change/:zeroOrPlus*",
+        alias: ":id(\\d+)/change/:oneOrPlus+",
         components: {
           default: new ViewImport("contacts/ContactEditView"),
           contactDetailsRV: new ViewImport("contacts/ContactDetailsView"),
         },
         props: {
-          default: (route) => ({ id: +route.params.id }),
-          contactDetailsRV: (route) => ({ id: +route.params.id }),
+          default: getIdParam,
+          contactDetailsRV: getIdParam,
         },
       }),
       new Route("", "contacts", "contacts/ContactsHomeView"),
@@ -75,4 +76,8 @@ function ViewImport(componentName, ext = "vue") {
     if (fileExt !== null) return import(`../views/${componentName}`);
     return import(`../views/${componentName}.${ext}`);
   };
+}
+
+function getIdParam(route) {
+  return { id: +route.params.id };
 }

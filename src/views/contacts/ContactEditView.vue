@@ -6,11 +6,9 @@
 </template>
 <script>
 export default {
-  props: {
-    id: {
-      type: Number,
-      required: true,
-    },
+  props: ["id"],
+  created() {
+    console.log("Parameter:", this.$route.params);
   },
 };
 </script>
