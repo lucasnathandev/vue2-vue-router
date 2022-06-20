@@ -2,6 +2,15 @@ These hints are wrote to guide the developer in the vue-router many ways to do s
 
 Navigation Guards hints:
 
+Next callback examples of usage:
+// if (to.query.authenticated === "true") return next();
+// next("/contacts");
+// next() is like next(true)
+// next(false) blocks navigation
+// next('/contacts') redirect to setted route.
+// next({name: 'contacts'}) redirect to an route with name property with value contacts
+// next(new Error(`Access denied to ${to.path}. User don't allowed. Only for admins.`)); returns errmessage
+
 Navigation process in vue-router:
 <img src="src/assets/navigation.png" alt="Navigation process"/>
 

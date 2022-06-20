@@ -5,7 +5,7 @@ Vue.use(VueRouter);
 const routes = [
   new Route("/", "home", "HomeView"),
   new Route("/about", "about", "AboutView"),
-  new Route("/contacts", "", "contacts/ContactsView", {
+  new Route("/contacts", "contacts", "contacts/ContactsView", {
     alias: ["/my-contacts", "/contacts-list"],
     props: (route) => {
       const search = route.query.search;
@@ -19,8 +19,12 @@ const routes = [
         //   id: 10,
         // },
       }),
-      new Route(":id(\\d+)/edit/:optional?", "contactEdit", "", {
-        alias: ":id(\\d+)/change/",
+      new Route(":id(\\d+)/edit", "contactEdit", "", {
+        alias: ":id(\\d+)/change",
+        beforeEnter(to, from, next) {
+          console.log("beforeEnter", to.path, from.path);
+          next();
+        },
         components: {
           default: new ViewImport("contacts/ContactEditView"),
           contactDetailsRV: new ViewImport("contacts/ContactDetailsView"),
@@ -30,7 +34,7 @@ const routes = [
           contactDetailsRV: getIdParam,
         },
       }),
-      new Route("", "contacts", "contacts/ContactsHomeView"),
+      new Route("", "contactsHome", "contacts/ContactsHomeView"),
     ],
   }),
   // new Route("/", "redirectContacts", "", { redirect: "/contacts", }),
@@ -48,12 +52,33 @@ const routes = [
   new Route("*", "404NotFound", "NotFoundView"),
 ];
 
-export default new VueRouter({
+const router = new VueRouter({
   linkActiveClass: "active",
   mode: "history",
   base: process.env.BASE_URL,
   routes,
 });
+
+//Global guards
+router.beforeEach((to, from, next) => {
+  console.log("beforeEach", to.path, from.path);
+  next();
+});
+
+router.beforeResolve((to, from, next) => {
+  console.log("beforeResolve");
+  next();
+});
+
+router.afterEach((to, from) => {
+  console.log("afterEach", to.path, from.path);
+});
+
+router.onError((error) => {
+  console.log(error);
+});
+
+export default router;
 
 // Functions
 function Route(path, name, component, options = {}) {

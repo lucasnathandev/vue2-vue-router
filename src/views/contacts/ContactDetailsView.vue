@@ -15,9 +15,15 @@ export default {
       required: true,
     },
   },
-  created(to, from) {
-    from;
-    console.log(this.$props);
+  data() {
+    return {
+      params: this.$route.params,
+    };
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log("beforeRouteUpdate");
+    this.params = to.params;
+    next();
   },
 };
 </script>
