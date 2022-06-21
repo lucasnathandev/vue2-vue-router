@@ -6,6 +6,7 @@
 </template>
 <script>
 export default {
+  name: "ContactEditView",
   props: ["id"],
   data() {
     return {

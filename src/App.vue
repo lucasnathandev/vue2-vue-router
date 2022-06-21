@@ -14,7 +14,9 @@
       <router-link to="/contacts" class="btn btn-info mb-4 mr-2"
         >Contacts</router-link
       >
-      <router-view />
+      <transition name="slide" mode="out-in">
+        <router-view />
+      </transition>
     </div>
 
     <!-- This tag is where the components from each router-link will be rendered-->
@@ -41,5 +43,16 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+</style>
+<style scoped>
+.slide-enter,
+.slide-leave-to {
+  transform: translateX(-50px);
+  opacity: 0;
+}
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s;
 }
 </style>

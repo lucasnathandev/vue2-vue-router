@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h3 class="font-weight light">Contacts</h3>
+    <h3 id="contacts" class="font-weight light">Contacts</h3>
     <div class="form-group">
       <input
         type="search"
@@ -29,6 +29,7 @@
 import ContactsListItem from "./ContactsListItem.vue";
 
 export default {
+  name: "ContactsList",
   components: {
     ContactsListItem,
   },
