@@ -1,6 +1,13 @@
 <template>
-  <div>
-    <h3 class="font-weight-light">Home page from contacts list</h3>
-    <p>Section destinated for details view and contacts edit.</p>
-  </div>
+  <contacts-list :searchProp="found" />
 </template>
+<script>
+import ContactsList from "../../components/contacts/ContactsList.vue";
+export default {
+  name: "ContactsView",
+  components: {
+    ContactsList,
+  },
+  props: ["found"],
+};
+</script>

@@ -1,35 +1,69 @@
 <template>
-  <div>
-    <h3 class="font-weight-light">Edit contact with id: {{ id }}</h3>
-    <button @click="$router.back()" class="btn btn-secondary my-4">Back</button>
+  <div v-if="contact">
+    <h3 class="font-weight-light">Contact name: {{ contact.name }}</h3>
+    <form @submit.prevent="save">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          placeholder="Insert new name."
+          v-model="contact.name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input
+          type="e-mail"
+          id="email"
+          class="form-control"
+          placeholder="Insert new e-mail."
+          v-model="contact.email"
+        />
+      </div>
+      <button
+        type="button"
+        class="my-4 mr-2 btn btn-secondary"
+        @click="$router.back()"
+      >
+        Back
+      </button>
+      <button type="submit" class="btn btn-success">Save</button>
+    </form>
   </div>
 </template>
 <script>
+import EventBus from "../../event-bus";
+
 export default {
   name: "ContactEditView",
   props: ["id"],
   data() {
     return {
-      test: "Lucas",
+      contact: undefined,
+      isCancelling: true,
     };
   },
   // beforeRouteEnter guard is ran before view creation, then, no instance, no data nor methods from the SFC can be
   // ran because it's not created.
   beforeRouteEnter(to, from, next) {
-    console.log("beforeRouteEnter");
-    // console.log("beforeRouteEnter", to.path, from.path, this.test); //this.test will break the application,
-    // because data was not created.
-    /*if (to.query.authenticated === "true")
-      // Into next function you can use an callback with this SFC instance as argument and then access all data from it.
-      return next((vm) => {
-        console.log("test:", vm.test);
-      });*/
-    next();
+    next((vm) => {
+      vm.contact = EventBus.searchContact(+to.params.id);
+    });
   },
   beforeRouteLeave(to, from, next) {
     console.log("beforeRouteLeave");
-    const confirm = window.confirm("Do you really want to exit this page?");
-    next(confirm);
+    this.isCancelling
+      ? next(window.confirm("Do you really want to exit this page?"))
+      : next();
+  },
+  methods: {
+    save() {
+      EventBus.editContact(this.contact);
+      this.isCancelling = false;
+      this.$router.push("/contacts");
+    },
   },
 };
 </script>

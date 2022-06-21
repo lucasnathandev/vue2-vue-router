@@ -4,20 +4,10 @@
       <router-view></router-view>
     </transition>
     <router-view name="contactDetailsRV"></router-view>
-    <contacts-list :searchProp="found" />
   </div>
 </template>
 
-<script>
-import ContactsList from "../../components/contacts/ContactsList.vue";
-export default {
-  name: "ContactsView",
-  components: {
-    ContactsList,
-  },
-  props: ["found"],
-};
-</script>
+
 <style scoped>
 .slide-enter,
 .slide-leave-to {

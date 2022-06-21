@@ -27,6 +27,7 @@
 
 <script>
 import ContactsListItem from "./ContactsListItem.vue";
+import EventBus from "../../event-bus";
 
 export default {
   name: "ContactsList",
@@ -36,11 +37,7 @@ export default {
   props: ["searchProp"],
   data() {
     return {
-      contacts: [
-        { id: 1, name: "Isaac Newton", email: "newton@email.com" },
-        { id: 2, name: "Jackie Chan", email: "jackie@email.com" },
-        { id: 3, name: "Lucas Nathan", email: "lucas@email.com" },
-      ],
+      contacts: [],
     };
   },
   computed: {
@@ -52,6 +49,9 @@ export default {
           )
         : this.contacts;
     },
+  },
+  created() {
+    this.contacts = EventBus.contacts;
   },
   methods: {
     search({ target }) {

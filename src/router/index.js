@@ -117,7 +117,7 @@ export default router;
 
 // Functions
 function Route(path, name, component, options = {}) {
-  const ext = component.match(/.vue|.js/);
+  const ext = component.match(/.vue|.jsx|.js/);
   return {
     path,
     name,
@@ -130,7 +130,7 @@ function Route(path, name, component, options = {}) {
 }
 
 function ViewImport(componentName, ext = "vue") {
-  const fileExt = componentName.match(/.vue|.js/);
+  const fileExt = componentName.match(/.vue|.jsx|.js/);
   return () => {
     if (fileExt !== null) return import(`../views/${componentName}`);
     return import(`../views/${componentName}.${ext}`);
